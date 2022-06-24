@@ -39,7 +39,7 @@ const onClickSubmit = event => {
 	fadeInOut()
 	let query = viewElems.searchInput.value
 	getWeatherByCity(query).then(data => {
-		console.log(data)
+		displayWeatherData(data)
 	})
 	setTimeout(() => {
 		switchView()
@@ -52,13 +52,29 @@ const onEnterSubmit = event => {
 		fadeInOut()
 		let query = viewElems.searchInput.value
 		getWeatherByCity(query).then(data => {
-			console.log(data)
+			displayWeatherData(data)
 		})
 		setTimeout(() => {
 			switchView()
 			fadeInOut()
 		}, 500)
 	}
+}
+
+const displayWeatherData = (data) => {
+    console.log(data)
+    viewElems.weatherCity.innerText = data.name
+    viewElems.weatherIcon.src = `http://openweathermap.org/img/w/${data.weather[0].icon}.png`
+    viewElems.weatherIcon.alt = data.weather[0].main
+
+
+    const currentTemp = data.main.temp.toFixed(2)
+    const maxTemp = data.main.temp_max.toFixed(2)
+    const minTemp = data.main.temp_min.toFixed(2)
+
+    viewElems.weatherCurrentTemp.innerText = `Current temperature: ${currentTemp}`
+    viewElems.weatherMaxTemp.innerText = `Max temperature: ${maxTemp}`
+    viewElems.weatherMinTemp.innerText = `Min temperature: ${minTemp}`
 }
 
 const switchView = () => {
